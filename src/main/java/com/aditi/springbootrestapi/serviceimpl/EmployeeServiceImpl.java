@@ -24,8 +24,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Cacheable("employees")
     public List<Employee> getAllEmployees() {
+
         return repository.findAll();
+
     }
 
     @Override

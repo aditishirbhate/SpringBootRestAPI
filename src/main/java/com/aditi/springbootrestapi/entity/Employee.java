@@ -16,7 +16,8 @@ public class Employee {
     @NotBlank(message="Name is required")
     private String name;
 
-    @Email(message="Invalid email")
+    @NotBlank(message="Email is required")
+    @Email(message="Invalid Email")
     private String email;
 
     @NotBlank(message="Department is required")
