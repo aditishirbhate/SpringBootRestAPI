@@ -1,4 +1,4 @@
-package com.aditi.service;
+package com.aditi.springbootrestapi.service;
 
 import java.util.List;
 
@@ -15,5 +15,7 @@ public interface EmployeeService {
     Employee updateEmployee(Long id, Employee employee);
 
     void deleteEmployee(Long id);
+
+	List<Employee> getEmployeesByDepartment(String department);
 
 }

@@ -1,43 +1,66 @@
 package com.aditi.springbootrestapi.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.aditi.service.EmployeeService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aditi.springbootrestapi.*;
 import com.aditi.springbootrestapi.entity.Employee;
+import com.aditi.springbootrestapi.service.EmployeeService;
+import com.aditi.springbootrestapi.serviceimpl.EmployeeServiceImpl;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/employees")
+@Validated
+
 public class EmployeeController {
 
     @Autowired
-    EmployeeService service;
+    private EmployeeServiceImpl service;
 
     @PostMapping
-    public Employee saveEmployee(@RequestBody Employee employee){
-        return service.saveEmployee(employee);
+    public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee employee) {
+        return new ResponseEntity<>(service.saveEmployee(employee), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees(){
-        return service.getAllEmployees();
+    public ResponseEntity<List<Employee>> getAllEmployees() {
+        return ResponseEntity.ok(service.getAllEmployees());
     }
+    
+    @GetMapping("/department/{department}")
+    public List<Employee> getDepartment(@PathVariable String department){
 
-    @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable Long id){
-        return service.getEmployeeById(id);
+        return service.getEmployeesByDepartment(department);
+
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id,
-                                   @RequestBody Employee employee){
-        return service.updateEmployee(id, employee);
+    public ResponseEntity<Employee> updateEmployee(
+            @PathVariable Long id,
+            @Valid @RequestBody Employee employee) {
+
+        return ResponseEntity.ok(service.updateEmployee(id, employee));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteEmployee(@PathVariable Long id){
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
+
         service.deleteEmployee(id);
-        return "Employee Deleted Successfully";
+        return ResponseEntity.ok("Employee deleted successfully");
     }
 
 }

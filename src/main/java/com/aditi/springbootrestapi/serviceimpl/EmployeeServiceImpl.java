@@ -3,12 +3,13 @@ package com.aditi.springbootrestapi.serviceimpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.aditi.repository.EmployeeRepository;
-import com.aditi.service.EmployeeService;
 import com.aditi.springbootrestapi.entity.Employee;
 import com.aditi.springbootrestapi.exception.ResourceNotFoundException;
+import com.aditi.springbootrestapi.repository.EmployeeRepository;
+import com.aditi.springbootrestapi.service.EmployeeService;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -47,12 +48,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(Long id) {
+    @Cacheable(value="employees")
+    public List<Employee> getEmployeesByDepartment(String department){
 
-        Employee emp=getEmployeeById(id);
-
-        repository.delete(emp);
+        return repository.findByDepartment(department);
 
     }
+
+	@Override
+	public void deleteEmployee(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

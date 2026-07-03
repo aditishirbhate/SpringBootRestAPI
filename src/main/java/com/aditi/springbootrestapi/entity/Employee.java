@@ -1,73 +1,71 @@
 package com.aditi.springbootrestapi.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name="employee")
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message="Name is required")
     private String name;
 
+    @Email(message="Invalid email")
     private String email;
 
+    @NotBlank(message="Department is required")
     private String department;
 
+    @Positive(message="Salary must be greater than zero")
     private double salary;
 
-    public Employee() {
+	public Long getId() {
+		return id;
+	}
 
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Employee(Long id, String name, String email, String department, double salary) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.department = department;
-        this.salary = salary;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setId(Long id) {
-        this.id=id;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setName(String name) {
-        this.name=name;
-    }
+	public String getDepartment() {
+		return department;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 
-    public void setEmail(String email) {
-        this.email=email;
-    }
+	public double getSalary() {
+		return salary;
+	}
 
-    public String getDepartment() {
-        return department;
-    }
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
 
-    public void setDepartment(String department) {
-        this.department=department;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary=salary;
-    }
-
+    // Constructors
+    // Getters
+    // Setters
 }
