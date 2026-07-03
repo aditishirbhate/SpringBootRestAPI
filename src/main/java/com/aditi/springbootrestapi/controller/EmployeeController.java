@@ -1,6 +1,8 @@
 package com.aditi.springbootrestapi.controller;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,14 +42,6 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getAllEmployees() {
         return ResponseEntity.ok(service.getAllEmployees());
     }
-    
-    @GetMapping("/department/{department}")
-    public List<Employee> getDepartment(@PathVariable String department){
-
-        return service.getEmployeesByDepartment(department);
-
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(
             @PathVariable Long id,

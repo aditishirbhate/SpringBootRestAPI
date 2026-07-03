@@ -1,7 +1,9 @@
 package com.aditi.springbootrestapi.serviceimpl;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -47,18 +49,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
-    @Override
-    @Cacheable(value="employees")
-    public List<Employee> getEmployeesByDepartment(String department){
-
-        return repository.findByDepartment(department);
-
-    }
-
 	@Override
 	public void deleteEmployee(Long id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Page<Employee> getEmployees(java.awt.print.Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
