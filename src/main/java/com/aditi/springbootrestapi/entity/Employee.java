@@ -24,6 +24,18 @@ public class Employee {
 
     @Positive(message="Salary must be greater than zero")
     private double salary;
+    
+    public Employee() {
+
+    }
+
+    public Employee(Long id, String name, String email, String department, double salary) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.department = department;
+        this.salary = salary;
+    }
 
 	public Long getId() {
 		return id;

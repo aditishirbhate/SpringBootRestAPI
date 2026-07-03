@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aditi.springbootrestapi.*;
 import com.aditi.springbootrestapi.entity.Employee;
 import com.aditi.springbootrestapi.service.EmployeeService;
 import com.aditi.springbootrestapi.serviceimpl.EmployeeServiceImpl;
@@ -30,9 +29,9 @@ import jakarta.validation.Valid;
 
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeServiceImpl service;
-
+	@Autowired
+	private EmployeeService service;
+	
     @PostMapping
     public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee employee) {
         return new ResponseEntity<>(service.saveEmployee(employee), HttpStatus.CREATED);
@@ -41,6 +40,13 @@ public class EmployeeController {
     @GetMapping
     public ResponseEntity<List<Employee>> getAllEmployees() {
         return ResponseEntity.ok(service.getAllEmployees());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+
+        Employee employee = service.getEmployeeById(id);
+
+        return ResponseEntity.ok(employee);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(
@@ -55,6 +61,10 @@ public class EmployeeController {
 
         service.deleteEmployee(id);
         return ResponseEntity.ok("Employee deleted successfully");
+    }
+    @GetMapping("/page")
+    public Page<Employee> getEmployees(Pageable pageable) {
+        return service.getEmployees(pageable);
     }
 
 }
